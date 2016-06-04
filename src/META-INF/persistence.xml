@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<persistence
+        xmlns="http://java.sun.com/xml/ns/persistence"
+        version="2.0">
+
+    <persistence-unit name="test-persistence" transaction-type="RESOURCE_LOCAL"><!--Nom de la persistence si il change ici il faut penser à le changer dans la classe com.supinfo.test.utils.PersistenceManager-->
+
+        <provider>
+            org.hibernate.ejb.HibernatePersistence
+        </provider>
+
+        <properties>
+            <property
+                    name="javax.persistence.jdbc.driver"
+                    value="com.mysql.jdbc.Driver"/> <!--votre driver JDBC ici MySQL, peut-être oracleSQL ou PostgresSQL...-->
+            <property
+                    name="javax.persistence.jdbc.user"
+                    value="root"/> <!--votre utilisateur pour la base de données, pour tous les droit mettre root-->
+            <property
+                    name="javax.persistence.jdbc.password"
+                    value=""/> <!--mot de passe-->
+            <property
+                    name="javax.persistence.jdbc.url"
+                    value="jdbc:mysql://127.0.0.1:3306/railcommander"/> <!--chaine de connexion, description:  jdbc:<votre type de base de données>://<IP de la base de données>:<port d'écoute de la base de données>/<nom de votre base de données>-->
+            <property
+                    name="hibernate.hbm2ddl.auto"
+                    value="update"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/> <!--méthode d'échange avec la bdd, ici mysql faire ctrl+espace derrière le dernier point pour voir tous les dialect-->
+        </properties>
+    </persistence-unit>
+</persistence>
