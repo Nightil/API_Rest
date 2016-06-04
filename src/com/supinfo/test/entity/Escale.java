@@ -1,6 +1,7 @@
 package com.supinfo.test.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "escale", schema = "railcommander", catalog = "")
-public class Escale {
+public class Escale implements Serializable{
 
 
     @Id

@@ -27,11 +27,17 @@ public class Gare {
     @Column(name = "type_train")
     public String typetrain;
 
+    @Column(name = "code_postal")
+    public Integer code_postal;
+
+    @Column(name = "ville")
+    public String ville;
+
     @OneToMany(mappedBy = "Gare_depart")
-    private java.util.List<Voyages> Voyage_Depart;
+    private transient  java.util.List<Voyages> Voyage_Depart;
 
     @OneToMany(mappedBy = "Gare_arrivee")
-    private java.util.List<Voyages> Voyage_arrivee;
+    private transient  java.util.List<Voyages> Voyage_arrivee;
 
     @ManyToOne
     private Escale Escale_gare;
@@ -66,6 +72,22 @@ public class Gare {
 
     public void setVoyage_Depart(List<Voyages> voyage_Depart) {
         Voyage_Depart = voyage_Depart;
+    }
+
+    public String getVille() {
+        return ville;
+    }
+
+    public void setVille(String ville) {
+        this.ville = ville;
+    }
+
+    public Integer getCode_postal() {
+        return code_postal;
+    }
+
+    public void setCode_postal(Integer code_postal) {
+        this.code_postal = code_postal;
     }
 
     public List<Voyages> getVoyage_arrivee() {
