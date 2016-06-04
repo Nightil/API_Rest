@@ -1,6 +1,7 @@
 package com.supinfo.test.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  */
 @Entity
 @Table(name= "voyage", schema = "railcommander", catalog = "")
-public class Voyages {
+public class Voyages implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
