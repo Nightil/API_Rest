@@ -47,6 +47,7 @@ public class UserRest extends HttpServlet{
         UserReponse userReponse = test.testUserLogin(email,mdp);
 
 
+
         return userReponse.toJson(); //TODO replace this stub to something useful
     }
 

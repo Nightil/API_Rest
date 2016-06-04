@@ -28,6 +28,7 @@ public class JpaUtilisateurs {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         Query query = entityManager.createQuery("FROM Utilisateurs mail WHERE mail.email=:mailRetrieve");
         query.setParameter("mailRetrieve", mail);
+
         if (query.getResultList().size() >= 1 ) {
             return true;
         } else {
