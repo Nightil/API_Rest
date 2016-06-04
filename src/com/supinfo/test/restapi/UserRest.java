@@ -11,10 +11,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 
 /**
  * Created by Alexa on 04/06/2015.
@@ -25,13 +22,15 @@ public class UserRest extends HttpServlet{
 
     @Path("/addUser")
     @POST
-    public String addUser(@QueryParam("email") String email) //!!!! Toujours mettre vos méthode en public sinon lourde perte de temps
+    public String addUser(@HeaderParam("nom") String nom, @HeaderParam("prenom") String prenom, @HeaderParam("email") String email, @HeaderParam("mdp") String mdp, @HeaderParam("civilite") String civilite,
+                          @HeaderParam("adresse") String adresse) //!!!! Toujours mettre vos méthode en public sinon lourde perte de temps
     {
         /*JpaUsers jpaUsers = new JpaUsers();
         jpaUsers.addUser("test@test.com","test","non","test");*/
 
         JpaUtilisateurs test = new JpaUtilisateurs();
-        UserReponse userReponse = test.addUser("recule", "alexandre",email, "azerty", "homme", "234 rue de la libération");
+        UserReponse userReponse = test.addUser(nom, prenom, email, mdp, civilite, adresse);
+
 
 
         return userReponse.toJson(); //TODO replace this stub to something useful
@@ -39,7 +38,7 @@ public class UserRest extends HttpServlet{
 
     @Path("/loginUser")
     @POST
-    public String loginUser(@QueryParam("email") String email, @QueryParam("mdp") String mdp) //!!!! Toujours mettre vos méthode en public sinon lourde perte de temps
+    public String loginUser(@HeaderParam("email") String email, @HeaderParam("mdp") String mdp) //!!!! Toujours mettre vos méthode en public sinon lourde perte de temps
     {
         /*JpaUsers jpaUsers = new JpaUsers();
         jpaUsers.addUser("test@test.com","test","non","test");*/

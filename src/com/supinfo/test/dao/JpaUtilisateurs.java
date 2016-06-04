@@ -21,10 +21,19 @@ public class JpaUtilisateurs {
     }
 
     // Methode d'utilisateur existant
-    public Boolean isUserExist(String mail){
-        //tester si un utilisateur dans le mail
+    public Boolean isUserExist(String mail) {
 
-        return false;
+        //tester si un utilisateur dans le mail
+        //check email valide
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        Query query = entityManager.createQuery("FROM Utilisateurs mail WHERE mail.email=:mailRetrieve");
+        query.setParameter("mailRetrieve", mail);
+        if (query.getResultList().size() >= 1 ) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     public UserReponse testUserLogin(String mail, String mdp){
@@ -33,51 +42,59 @@ public class JpaUtilisateurs {
         UserReponse userReponse = new UserReponse();
 
         //requete
-        
+        EntityManager entityManager=entityManagerFactory.createEntityManager();
+        Query query=entityManager.createQuery("FROM Utilisateurs mail WHERE mail.email=:mailRetrieve");
+        query.setParameter("mailRetrieve", mail);
+        Utilisateurs result = null;
+        try
+        {
+            result = (Utilisateurs)query.getSingleResult();
+            entityManager.close();
+            userReponse.setUser(result);
+            userReponse.setSuccess(new Success(true,"Vous etes connecté"));
 
-        //userReponse.setUser(Add);
-        userReponse.setSuccess(new Success(true,""));
-
+        }catch (Exception e)
+        {
+            userReponse.setSuccess(new Success(false,"Utilisateur inconnue"));
+        }
         return userReponse;
     }
 
     public UserReponse addUser(String nom, String prenom, String mail, String Mdp, String civilite, String adresse)
     {
-        //on prepatre la reponse
+        //on prepare la reponse
         UserReponse userReponse = new UserReponse();
-
-        //check email valide
 
         //check si utilisateur existe
         if(isUserExist(mail)){
             userReponse.setSuccess(new Success(false,"L'utilisateur existe deja"));
             return userReponse;
         }
+        else
+        {
+            //ajoute un utilisateur en BDD
+            EntityManager em = PersistenceManager.getEntityManagerFactory().createEntityManager();
+            Utilisateurs Add = new Utilisateurs();
+            Add.setNom(nom);
+            Add.setPrenom(prenom);
+            Add.setEmail(mail);
+            Add.setMdp(Mdp);
+            Add.setCivilite(civilite);
+            Add.setAdresse(adresse);
 
+            EntityTransaction t = em.getTransaction();
+            try {
+                t.begin();
+                em.persist(Add);
+                t.commit();
+            } finally {
+                if (t.isActive()) t.rollback();
+                em.close();
+            }
 
-        //ajoute
-        EntityManager em = PersistenceManager.getEntityManagerFactory().createEntityManager();
-        Utilisateurs Add = new Utilisateurs();
-        Add.setNom(nom);
-        Add.setPrenom(prenom);
-        Add.setEmail(mail);
-        Add.setMdp(Mdp);
-        Add.setCivilite(civilite);
-        Add.setAdresse(adresse);
-
-        EntityTransaction t = em.getTransaction();
-        try {
-            t.begin();
-            em.persist(Add);
-            t.commit();
-        } finally {
-            if (t.isActive()) t.rollback();
-            em.close();
+            userReponse.setUser(Add);
+            userReponse.setSuccess(new Success(true,"vous etes enregistré"));
         }
-
-        userReponse.setUser(Add);
-        userReponse.setSuccess(new Success(true,""));
-
         return userReponse;
     }
     /*public void deleteUser(long id)

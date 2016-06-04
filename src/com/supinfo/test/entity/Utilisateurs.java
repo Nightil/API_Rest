@@ -96,9 +96,9 @@ public class Utilisateurs implements Serializable{
         ListReservation = listReservation;
     }
 
-
+    // transcient : non serialisable
     @OneToMany(mappedBy = "MyUser")
-    private java.util.List<Reservations> ListReservation;
+    private transient java.util.List<Reservations> ListReservation;
 
     public Utilisateurs(String email, String mdp, String nom, String prenom, String adresse, java.util.List<Reservations> listReservation) {
         this.email = email;
