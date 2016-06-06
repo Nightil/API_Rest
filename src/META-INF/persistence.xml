@@ -24,7 +24,7 @@
                     value="jdbc:mysql://127.0.0.1:3306/railcommander"/> <!--chaine de connexion, description:  jdbc:<votre type de base de données>://<IP de la base de données>:<port d'écoute de la base de données>/<nom de votre base de données>-->
             <property
                     name="hibernate.hbm2ddl.auto"
-                    value="update"/>
+                    value="create-drop"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/> <!--méthode d'échange avec la bdd, ici mysql faire ctrl+espace derrière le dernier point pour voir tous les dialect-->
         </properties>
