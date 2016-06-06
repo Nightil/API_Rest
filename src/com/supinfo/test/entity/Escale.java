@@ -21,4 +21,5 @@ public class Escale implements Serializable{
 
     @OneToMany(mappedBy = "Escale_gare")
     private List<Gare> gare;
+
 }

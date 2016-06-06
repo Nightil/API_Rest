@@ -41,6 +41,29 @@ public class JpaGares {
         return garesReponse;
     }
 
+    public Gare get(String search) {
+
+        EntityManager entityManager=entityManagerFactory.createEntityManager();
+        Query query=entityManager.createQuery("FROM Gare u WHERE u.nom_gare =:nomgare  ");
+        query.setParameter("nomgare",search);
+        Gare result = (Gare) query.getSingleResult();
+        entityManager.close();
+
+
+        return result;
+    }
+    public Gare getid(String search) {
+
+        EntityManager entityManager=entityManagerFactory.createEntityManager();
+        Query query=entityManager.createQuery("FROM Gare u WHERE u.id =:nomgare  ");
+        query.setParameter("nomgare",search);
+        Gare result = (Gare) query.getSingleResult();
+        entityManager.close();
+
+
+        return result;
+    }
+
     public void addGare( String fName ,String ville, Integer cp,  Point pts)
     {
         EntityManager em = PersistenceManager.getEntityManagerFactory().createEntityManager();
