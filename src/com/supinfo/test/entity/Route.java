@@ -23,6 +23,9 @@ public class Route implements Serializable{
     private Gare Gare_depart;
 
     @ManyToOne
+    private Ligne ligne;
+
+    @ManyToOne
     private  Gare Gare_arrivee;
 
     public int getId() {
@@ -55,5 +58,13 @@ public class Route implements Serializable{
 
     public void setGare_arrivee(Gare gare_arrivee) {
         Gare_arrivee = gare_arrivee;
+    }
+
+    public Ligne getLigne() {
+        return ligne;
+    }
+
+    public void setLigne(Ligne ligne) {
+        this.ligne = ligne;
     }
 }

@@ -1,6 +1,5 @@
 package com.supinfo.test.dao;
 
-import com.supinfo.test.entity.Gare;
 import com.supinfo.test.entity.Ligne;
 import com.supinfo.test.entity.Route;
 import com.supinfo.test.utils.PersistenceManager;
@@ -9,43 +8,38 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import java.util.List;
 
 /**
  * com.supinfo.test.dao
  * Created by Theo on 04/06/2016 for API_Rest.
  */
-public class JpaRoute {
+public class JpaLigne {
 
     private EntityManagerFactory entityManagerFactory;
 
-    public JpaRoute() {
+    public JpaLigne() {
         entityManagerFactory = PersistenceManager.getEntityManagerFactory();
     }
 
 
-    public Route get(String gareD , String gareA) {
-        JpaGares jpaGares = new JpaGares();
-
-            Gare dep = jpaGares.get((gareD));
-            Gare arv =   jpaGares.get((gareA));
+    public Ligne get( String nomligne) {
         EntityManager entityManager=entityManagerFactory.createEntityManager();
-        Query query=entityManager.createQuery("FROM Route u WHERE u.Gare_depart =:nomgare AND u.Gare_arrivee =:nomgare1 ");
-        query.setParameter("nomgare",dep);
-        query.setParameter("nomgare1",arv);
-        Route result = (Route) query.getSingleResult();
+        Query query=entityManager.createQuery("FROM Ligne u WHERE u.nomLigne =:nomgare  ");
+        query.setParameter("nomgare",nomligne);
+        Ligne result = (Ligne) query.getSingleResult();
         entityManager.close();
 
 
         return result;
     }
-    public void addRoute(Gare gareD, Gare GareA, Integer km, Ligne a)
+    public void addLigne(String nomligne)
     {
         EntityManager em = PersistenceManager.getEntityManagerFactory().createEntityManager();
-        Route toAdd = new Route();
-        toAdd.setGare_depart(gareD);
-        toAdd.setGare_arrivee(GareA);
-        toAdd.setLigne(a);
-        toAdd.setDistance(km);
+
+
+        Ligne toAdd = new Ligne();
+        toAdd.setNomLigne(nomligne);
 
         EntityTransaction t = em.getTransaction();
         try {

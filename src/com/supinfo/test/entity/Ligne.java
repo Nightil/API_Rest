@@ -20,13 +20,30 @@ public class Ligne implements Serializable {
     String nomLigne;
 
 
-    @OneToMany(mappedBy = "route")
-    private List<Route> routeList;
+    @OneToMany(mappedBy = "ligne")
+    private transient List<Route> routeList;
 
     public Long getId() {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
 
+    public String getNomLigne() {
+        return nomLigne;
+    }
 
+    public void setNomLigne(String nomLigne) {
+        this.nomLigne = nomLigne;
+    }
+
+    public List<Route> getRouteList() {
+        return routeList;
+    }
+
+    public void setRouteList(List<Route> routeList) {
+        this.routeList = routeList;
+    }
 }

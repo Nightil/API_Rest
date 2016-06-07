@@ -1,25 +1,14 @@
 package com.supinfo.test.restapi;
 
-import com.supinfo.test.ReponseRest.DealReponse;
 import com.supinfo.test.dao.JpaDeal;
 import com.supinfo.test.dao.JpaGares;
+import com.supinfo.test.dao.JpaLigne;
 import com.supinfo.test.dao.JpaRoute;
-import com.supinfo.test.entity.Deal;
-import com.supinfo.test.entity.Gare;
-import com.supinfo.test.entity.Route;
-import com.supinfo.test.utils.PersistenceManager;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaDelete;
 import javax.servlet.http.HttpServlet;
-import javax.transaction.Transactional;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import java.awt.*;
-import java.util.*;
 
 /**
  * Created by Alexa on 04/06/2015.
@@ -55,19 +44,24 @@ public class SysRest extends HttpServlet{
         testt.addGare( "Gare de Marseille" ,"Marseille" , 45000,new Point(54,45));
 
         JpaRoute route = new JpaRoute();
+        JpaLigne jpaLigne =  new JpaLigne();
+        jpaLigne.addLigne("A");
+        jpaLigne.addLigne("B");
         // Gare de depart du tronçon : Gare arrivé  : Distance
-        route.addRoute(testt.get("Gare d'orléans"),testt.get("Gare de lyon"),100);
-        route.addRoute(testt.get("Gare de lyon"),testt.get("Gare d'orléans"),100);
+        route.addRoute(testt.get("Gare d'orléans"),testt.get("Gare de lyon"),100,jpaLigne.get("A"));
+        route.addRoute(testt.get("Gare de lyon"),testt.get("Gare d'orléans"),100, jpaLigne.get("A"));
 
 
-       /* route.addRoute(testt.get("Gare de lyon"),testt.get("Gare st jean"),250);
+       route.addRoute(testt.get("Gare de lyon"),testt.get("Gare st jean"),250, jpaLigne.get("A"));
 
-        route.addRoute(testt.get("Gare d'orléans"),testt.get("Gare de Montpellier-Saint-Roch"),150);
+        route.addRoute(testt.get("Gare d'orléans"),testt.get("Gare de Montpellier-Saint-Roch"),150, jpaLigne.get("A"));
 
-        route.addRoute(testt.get("Gare de Montpellier-Saint-Roch"),testt.get("Gare d'orléans"),150);
+        route.addRoute(testt.get("Gare de Montpellier-Saint-Roch"),testt.get("Gare d'orléans"),150, jpaLigne.get("A"));
 
-        route.addRoute(testt.get("Gare de Montpellier-Saint-Roch"),testt.get("Gare de Marseille"),150);
-        route.addRoute(testt.get("Gare de Marseille"),testt.get("Gare de Montpellier-Saint-Roch"),150);*/
+        route.addRoute(testt.get("Gare de Montpellier-Saint-Roch"),testt.get("Gare de Marseille"),150, jpaLigne.get("B"));
+        route.addRoute(testt.get("Gare de Marseille"),testt.get("Gare de Montpellier-Saint-Roch"),150, jpaLigne.get("B"));
+
+
 
         return "ok";
     }
