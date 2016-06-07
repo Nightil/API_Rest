@@ -32,7 +32,7 @@ public class JpaGares {
 
         EntityManager entityManager=entityManagerFactory.createEntityManager();
         Query query=entityManager.createQuery("FROM Gare u WHERE u.nom_gare like:nomgare OR u.ville like:nomgare ");
-        query.setParameter("nomgare",search);
+        query.setParameter("nomgare","%"+search+"%");
         List<Gare> result =query.getResultList();
         entityManager.close();
         garesReponse.setGares(result);
