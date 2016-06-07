@@ -25,6 +25,17 @@ public class JpaVoyages {
         entityManagerFactory = PersistenceManager.getEntityManagerFactory();
     }
 
+    private void getlignesfromroute(List<Route> routeList, EntityManager entityManager) {
+
+        for (Route route : routeList) {
+            Query queryy=entityManager.createQuery("  FROM Ligne rt where rt.routeList=:Gare_depart ");
+
+            queryy.setParameter("Gare_depart",route);
+
+
+        }
+    }
+
 
     public Boolean find = false;
     public List<Route> getroutesfromgare(Gare dep,List<Route> routeList , EntityManager entityManager ,String Destiantion){
@@ -82,10 +93,14 @@ public class JpaVoyages {
 
             if(routeList.isEmpty()){
                 voyageReponse.setSuccess(new Success(false,"Aucun Itineraire trouvé"));
-            }else {
+                entityManager.close();
+                return voyageReponse;
+            }
                 voyageReponse.setRouteList(routeList);
                 voyageReponse.setSuccess(succ);
-            }
+
+
+                getlignesfromroute(routeList, entityManager);
         }catch (Exception e){
             succ.setSuccess(false);
             succ.setMessage("Gare introuvable");
@@ -97,4 +112,6 @@ public class JpaVoyages {
 
         return voyageReponse;
     }
+
+
 }

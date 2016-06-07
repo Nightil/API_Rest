@@ -26,7 +26,21 @@ public class JpaRoute {
     }
 
 
+    public Route get(String gareD , String gareA) {
+        JpaGares jpaGares = new JpaGares();
 
+            Gare dep = jpaGares.getid(Long.valueOf(gareD));
+            Gare arv =   jpaGares.getid(Long.valueOf(gareA));
+        EntityManager entityManager=entityManagerFactory.createEntityManager();
+        Query query=entityManager.createQuery("FROM Route u WHERE u.Gare_depart =:nomgare AND u.Gare_arrivee =:nomgare1 ");
+        query.setParameter("nomgare",dep);
+        query.setParameter("nomgare1",arv);
+        Route result = (Route) query.getSingleResult();
+        entityManager.close();
+
+
+        return result;
+    }
     public void addRoute( Gare gareD ,Gare GareA, Integer km )
     {
         EntityManager em = PersistenceManager.getEntityManagerFactory().createEntityManager();
