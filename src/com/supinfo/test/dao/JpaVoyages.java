@@ -32,6 +32,16 @@ public class JpaVoyages {
 
         queryy.setParameter("Gare_depart",dep);
         for (Route route : (List<Route>) queryy.getResultList()) {
+            Boolean conti =false;
+            for (Route route1 : routeList) {
+                if(route1.getGare_depart().equals(route.getGare_arrivee())){
+                    conti = true;
+                    break;
+                }
+            }
+            if (conti){
+                continue;
+            }
             routeList.add(route);
             if(route.getGare_arrivee().getNom_gare().equals(Destiantion)){
                 System.out.println("Trajet trouvé");
@@ -43,47 +53,47 @@ public class JpaVoyages {
                     routeList.remove(route);
                 }
             }
-            if(find){
-              break;
-            }
+            if(find){         break;       }
         }
        return  routeList;
     }
 
 
-    public VoyageReponse search(String gareD, String gareA, Integer heureD, Integer heureR, Integer dateD, Integer dateR) {
+    public VoyageReponse search(Integer gareD, Integer gareA, Integer heureD, Integer heureR, Integer dateD, Integer dateR) {
         VoyageReponse voyageReponse = new VoyageReponse();
-
+        Success succ = new Success(true, "");
         EntityManager entityManager=entityManagerFactory.createEntityManager();
-        Query query=entityManager.createQuery("FROM Voyages u WHERE u.date_depart >=:date_depart AND u.Gare_depart =:Gare_depart AND  u.Gare_arrivee =:Gare_arrivee");
+      /*  Query query=entityManager.createQuery("FROM Voyages u WHERE u.date_depart >=:date_depart AND u.Gare_depart =:Gare_depart AND  u.Gare_arrivee =:Gare_arrivee");
         query.setParameter("date_depart",dateD);
         query.setParameter("Gare_arrivee",gareA);
         query.setParameter("Gare_depart",gareD);
         List<Voyages> result =query.getResultList();
-
-        JpaGares jpaGares = new JpaGares();
-        Gare dep = jpaGares.getid("Gare de Montpellier-Saint-Roch");
-         Gare arv =   jpaGares.getid("Gare st jean");
-
-        String queryString = "";
-        List<Route> routeList = new ArrayList<Route>();
-        find = false;
-        List<Route> route = getroutesfromgare(dep,routeList, entityManager, arv.getNom_gare());
-
-
-     /*   Query queryy=entityManager.createQuery("  FROM Route where rt.Gare_depart=:Gare_depart ");
-
-        List<Route> resultt =query.getResultList();
 */
+        JpaGares jpaGares = new JpaGares();
+        try {
+
+
+            Gare dep = jpaGares.getid(Long.valueOf(gareD));
+            Gare arv =   jpaGares.getid(Long.valueOf(gareA));
+
+            List<Route> routeList = new ArrayList<Route>();
+            find = false;
+            List<Route> route = getroutesfromgare(dep,routeList, entityManager, arv.getNom_gare());
+
+            if(routeList.isEmpty()){
+                voyageReponse.setSuccess(new Success(false,"Aucun Itineraire trouvé"));
+            }else {
+                voyageReponse.setRouteList(routeList);
+                voyageReponse.setSuccess(succ);
+            }
+        }catch (Exception e){
+            succ.setSuccess(false);
+            succ.setMessage("Gare introuvable");
+            voyageReponse.setSuccess(succ);
+        }
 
         entityManager.close();
-        if(routeList.isEmpty()){
-            voyageReponse.setSuccess(new Success(false,"Aucun Itineraire trouvé"));
-        }else {
-            voyageReponse.setRouteList(routeList);
-            voyageReponse.setVoyages(result);
-            voyageReponse.setSuccess(new Success(true,""));
-        }
+
 
         return voyageReponse;
     }

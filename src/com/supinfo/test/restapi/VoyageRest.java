@@ -20,7 +20,7 @@ public class VoyageRest extends HttpServlet{
 
     @Path("/searchVoyage")
     @POST
-    public String searchVoyage(@HeaderParam("gareD") String gareD , @HeaderParam("gareA") String gareA , @HeaderParam("heureD") Integer heureD  , @HeaderParam("heureR") Integer heureR  , @HeaderParam("dateD") Integer dateD , @HeaderParam("dateR") Integer dateR )
+    public String searchVoyage(@HeaderParam("gareD") Integer gareD , @HeaderParam("gareA") Integer gareA , @HeaderParam("heureD") Integer heureD  , @HeaderParam("heureR") Integer heureR  , @HeaderParam("dateD") Integer dateD , @HeaderParam("dateR") Integer dateR )
     {
 
 

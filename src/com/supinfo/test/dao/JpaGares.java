@@ -52,14 +52,13 @@ public class JpaGares {
 
         return result;
     }
-    public Gare getid(String search) {
+    public Gare getid(Long search) {
 
         EntityManager entityManager=entityManagerFactory.createEntityManager();
-        Query query=entityManager.createQuery("FROM Gare u WHERE u.id =:nomgare  ");
-        query.setParameter("nomgare",search);
+        Query query=entityManager.createQuery("FROM Gare u WHERE u.id =:idgare");
+        query.setParameter("idgare",search);
         Gare result = (Gare) query.getSingleResult();
         entityManager.close();
-
 
         return result;
     }

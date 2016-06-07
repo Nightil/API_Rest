@@ -47,21 +47,28 @@ public class SysRest extends HttpServlet{
 
 
         JpaGares testt = new JpaGares();
-        testt.addGare( "Gare d'orléans" ,"Orléans" , 45000,new Point(54,45));
+        //Nom gare : Nom ville : CP : GPS
+        testt.addGare( "Gare d'orléans" ,"Orléans" , 45000,new Point(5,45));
         testt.addGare( "Gare de lyon" ,"Paris" , 75000,new Point(54,45));
         testt.addGare( "Gare st jean" ,"Bordeaux" , 45000,new Point(54,45));
         testt.addGare( "Gare de Montpellier-Saint-Roch" ,"Montpellier" , 45000,new Point(54,45));
         testt.addGare( "Gare de Marseille" ,"Marseille" , 45000,new Point(54,45));
 
         JpaRoute route = new JpaRoute();
+        // Gare de depart du tronçon : Gare arrivé  : Distance
+        route.addRoute(testt.get("Gare d'orléans"),testt.get("Gare de lyon"),100);
+        route.addRoute(testt.get("Gare de lyon"),testt.get("Gare d'orléans"),100);
 
-        route.addRoute(testt.get("Gare d'orléans"),testt.get("Gare de lyon"),50);
-        route.addRoute(testt.get("Gare de lyon"),testt.get("Gare st jean"),250);
+
+       /* route.addRoute(testt.get("Gare de lyon"),testt.get("Gare st jean"),250);
 
         route.addRoute(testt.get("Gare d'orléans"),testt.get("Gare de Montpellier-Saint-Roch"),150);
-        route.addRoute(testt.get("Gare de Montpellier-Saint-Roch"),testt.get("Gare de Marseille"),150);
 
         route.addRoute(testt.get("Gare de Montpellier-Saint-Roch"),testt.get("Gare d'orléans"),150);
+
+        route.addRoute(testt.get("Gare de Montpellier-Saint-Roch"),testt.get("Gare de Marseille"),150);
+        route.addRoute(testt.get("Gare de Marseille"),testt.get("Gare de Montpellier-Saint-Roch"),150);*/
+
         return "ok";
     }
 
