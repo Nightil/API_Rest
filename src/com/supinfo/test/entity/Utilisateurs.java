@@ -32,6 +32,17 @@ public class Utilisateurs implements Serializable{
     @Column(name = "email")
     private String email;
 
+    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL,mappedBy = "reservationsuser")
+    private transient List<Reservations> reservationsList;
+
+    public List<Reservations> getReservationsList() {
+        return reservationsList;
+    }
+
+    public void setReservationsList(List<Reservations> reservationsList) {
+        this.reservationsList = reservationsList;
+    }
+
     public long getId_user() {
         return id_user;
     }

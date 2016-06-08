@@ -2,6 +2,7 @@ package com.supinfo.test.dao;
 
 import com.supinfo.test.ReponseRest.Success;
 import com.supinfo.test.ReponseRest.UserReponse;
+import com.supinfo.test.entity.Gare;
 import com.supinfo.test.entity.Utilisateurs;
 import com.supinfo.test.utils.PersistenceManager;
 
@@ -36,7 +37,16 @@ public class JpaUtilisateurs {
         }
 
     }
+    public Utilisateurs getid(Long search) {
 
+        EntityManager entityManager=entityManagerFactory.createEntityManager();
+        Query query=entityManager.createQuery("FROM Utilisateurs u WHERE u.id =:idgare");
+        query.setParameter("idgare",search);
+        Utilisateurs result = (Utilisateurs) query.getSingleResult();
+        entityManager.close();
+
+        return result;
+    }
     public UserReponse testUserLogin(String mail, String mdp){
         //tester si un utilisateur dans le mail
         //on prepare la reponse

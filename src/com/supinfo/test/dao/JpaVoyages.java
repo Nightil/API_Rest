@@ -80,7 +80,6 @@ public class JpaVoyages {
 
             JpaLigne jpaLigne = new JpaLigne();
 
-
             Ligne ligne = jpaLigne.get(correspondanceReponse.getLigne());
             int cal = getkmfor(ligne, correspondanceReponse.getGareD() ,   entityManager)*33;
             calendar.add(Calendar.SECOND, -cal);
@@ -89,10 +88,8 @@ public class JpaVoyages {
                 queryy.setFirstResult(pos);
                 comp= true;
             }
-
             queryy.setMaxResults(1);
             queryy.setParameter("ligne",ligne);
-            // gets a calendar using the default time zone and locale.
             queryy.setParameter("dateD",calendar.getTime());
 
             Trains trains = (Trains) queryy.getSingleResult();

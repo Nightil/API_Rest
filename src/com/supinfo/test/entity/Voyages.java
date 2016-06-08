@@ -19,9 +19,6 @@ public class Voyages implements Serializable{
     private Date date_depart;
     private Date date_arrivee;
 
-    @OneToMany(mappedBy = "MyVoyage")
-    private List<Reservations> Reservation;
-
 
     @ManyToOne
     private Gare Gare_depart;
@@ -56,13 +53,6 @@ public class Voyages implements Serializable{
         this.date_arrivee = date_arrivee;
     }
 
-    public List<Reservations> getReservation() {
-        return Reservation;
-    }
-
-    public void setReservation(List<Reservations> reservation) {
-        Reservation = reservation;
-    }
 
     public Gare getGare_Depart() {
         return Gare_depart;
