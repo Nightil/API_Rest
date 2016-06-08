@@ -80,6 +80,30 @@ public class SysRest extends HttpServlet{
                     } catch (ParseException e) {
 
                     }
+                    try {
+                        int u = (r.nextInt(High-Low) + Low);
+                        Date Ddate = dateFormat.parse( "2016-"+m+"-"+d+" "+i+":"+u+":00" );
+                        jpaTrain.addTrain(Ddate, jpaLigne.get("D"), 100, 0);
+
+                    } catch (ParseException e) {
+
+                    }
+                    try {
+                        int u = (r.nextInt(High-Low) + Low);
+                        Date Ddate = dateFormat.parse( "2016-"+m+"-"+d+" "+i+":"+u+":00" );
+                        jpaTrain.addTrain(Ddate, jpaLigne.get("E"), 100, 0);
+
+                    } catch (ParseException e) {
+
+                    }
+                    try {
+                        int u = (r.nextInt(High-Low) + Low);
+                        Date Ddate = dateFormat.parse( "2016-"+m+"-"+d+" "+i+":"+u+":00" );
+                        jpaTrain.addTrain(Ddate, jpaLigne.get("F"), 100, 0);
+
+                    } catch (ParseException e) {
+
+                    }
 
 
                 }
@@ -117,44 +141,35 @@ public class SysRest extends HttpServlet{
         JpaRoute route = new JpaRoute();
         // Gare de depart du tronçon : Gare arrivé  : Distance
         // Orleans - Paris-Austerlitz
+        route.addRoute(testt.get("Gare Matabiau"),testt.get("Gare Saint-Jean"),258,jpaLigne.get("A"));
+        route.addRoute(testt.get("Gare Saint-Jean"), testt.get("Gare Tours Centre"),349,jpaLigne.get("A"));
+        route.addRoute(testt.get("Gare Tours Centre"),testt.get("Gare d'Orléans"),112,jpaLigne.get("A"));
         route.addRoute(testt.get("Gare d'Orléans"),testt.get("Gare de Lyon"),118,jpaLigne.get("A"));
-        route.addRoute(testt.get("Gare de Lyon"),testt.get("Gare d'Orléans"),118,jpaLigne.get("D"));
-
-        // Paris - Brest
-        route.addRoute(testt.get("Gare de Lyon"),testt.get("Gare de Brest"),623,jpaLigne.get("B"));
-        route.addRoute(testt.get("Gare de Brest"),testt.get("Gare de Lyon"),632,jpaLigne.get("E"));
-
-        // Paris - Lille
         route.addRoute(testt.get("Gare de Lyon"),testt.get("Gare de Lille Flandres"),226,jpaLigne.get("A"));
+
+
         route.addRoute(testt.get("Gare de Lille Flandres"),testt.get("Gare de Lyon"),226,jpaLigne.get("D"));
+        route.addRoute(testt.get("Gare de Lyon"),testt.get("Gare d'Orléans"),118,jpaLigne.get("D"));
+        route.addRoute(testt.get("Gare d'Orléans"),testt.get("Gare Tours Centre"),112,jpaLigne.get("D"));
+        route.addRoute(testt.get("Gare Tours Centre"),testt.get("Gare Saint-Jean"),349,jpaLigne.get("D"));
+        route.addRoute(testt.get("Gare Saint-Jean"),testt.get("Gare Matabiau"),258,jpaLigne.get("D"));
 
-        // Paris - Dijon
-        route.addRoute(testt.get("Gare de Lyon"),testt.get("Gare Dijon-Ville"),164,jpaLigne.get("E"));
-        route.addRoute(testt.get("Gare Dijon-Ville"),testt.get("Gare de Lyon"),164,jpaLigne.get("B"));
 
-        // Dijon - Lyon
-        route.addRoute(testt.get("Gare Dijon-Ville"),testt.get("Gare Pare-Dieu"),192,jpaLigne.get("E"));
         route.addRoute(testt.get("Gare Pare-Dieu"),testt.get("Gare Dijon-Ville"),192,jpaLigne.get("B"));
+        route.addRoute(testt.get("Gare Dijon-Ville"),testt.get("Gare de Lyon"),164,jpaLigne.get("B"));
+        route.addRoute(testt.get("Gare de Lyon"),testt.get("Gare de Brest"),623,jpaLigne.get("B"));
+
+        route.addRoute(testt.get("Gare de Brest"),testt.get("Gare de Lyon"),632,jpaLigne.get("E"));
+        route.addRoute(testt.get("Gare de Lyon"),testt.get("Gare Dijon-Ville"),164,jpaLigne.get("E"));
+        route.addRoute(testt.get("Gare Dijon-Ville"),testt.get("Gare Pare-Dieu"),192,jpaLigne.get("E"));
 
         // Lyon - Marseille
-        route.addRoute(testt.get("Gare Pare-Dieu"),testt.get("Gare Saint-Charles"),325,jpaLigne.get("C"));
-        route.addRoute(testt.get("Gare Saint-Charles"),testt.get("Gare Pare-Dieu"),325,jpaLigne.get("F"));
-
-        // Lyon - Montpellier
-        route.addRoute(testt.get("Gare Pare-Dieu"),testt.get("Gare Saint-Roch"),314,jpaLigne.get("F"));
         route.addRoute(testt.get("Gare Saint-Roch"),testt.get("Gare pare-Dieu"),314,jpaLigne.get("C"));
+        route.addRoute(testt.get("Gare Pare-Dieu"),testt.get("Gare Saint-Charles"),325,jpaLigne.get("C"));
 
-        // Orleans - Tours
-        route.addRoute(testt.get("Gare d'Orléans"),testt.get("Gare Tours Centre"),112,jpaLigne.get("D"));
-        route.addRoute(testt.get("Gare Tours Centre"),testt.get("Gare d'Orléans"),112,jpaLigne.get("A"));
-
-        // Tours - Bordeaux
-        route.addRoute(testt.get("Gare Tours Centre"),testt.get("Gare Saint-Jean"),349,jpaLigne.get("D"));
-        route.addRoute(testt.get("Gare Saint-Jean"), testt.get("Gare Tours Centre"),349,jpaLigne.get("A"));
-
-        // Bordeaux - Toulouse
-        route.addRoute(testt.get("Gare Saint-Jean"),testt.get("Gare Matabiau"),258,jpaLigne.get("D"));
-        route.addRoute(testt.get("Gare Matabiau"),testt.get("Gare Saint-Jean"),258,jpaLigne.get("A"));
+        route.addRoute(testt.get("Gare Saint-Charles"),testt.get("Gare Pare-Dieu"),325,jpaLigne.get("F"));
+        route.addRoute(testt.get("Gare Pare-Dieu"),testt.get("Gare Saint-Roch"),314,jpaLigne.get("F"));
+        // Lyon - Montpellier
 
 
 

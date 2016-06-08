@@ -13,9 +13,8 @@ import java.util.List;
  */
 public class VoyageReponse implements Serializable {
     List<Voyages> voyages = null;
-
-    List<CorrespondanceReponse> correspondanceReponses = new ArrayList<CorrespondanceReponse>();
-    List<Route> routeList = new ArrayList<Route>();
+    ArrayList<PossibilityReponse> possibilityReponses = new ArrayList<PossibilityReponse>();
+     List<Route> routeList = new ArrayList<Route>();
 
     Success success = new Success(false,"Erreur inconue");
 
@@ -28,12 +27,12 @@ public class VoyageReponse implements Serializable {
 
     }
 
-    public List<CorrespondanceReponse> getCorrespondanceReponses() {
-        return correspondanceReponses;
+    public ArrayList<PossibilityReponse> getPossibilityReponses() {
+        return possibilityReponses;
     }
 
-    public void setCorrespondanceReponses(List<CorrespondanceReponse> correspondanceReponses) {
-        this.correspondanceReponses = correspondanceReponses;
+    public void setPossibilityReponses(ArrayList<PossibilityReponse> possibilityReponses) {
+        this.possibilityReponses = possibilityReponses;
     }
 
     public List<Route> getRouteList() {

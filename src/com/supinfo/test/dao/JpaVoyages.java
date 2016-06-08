@@ -1,17 +1,20 @@
 package com.supinfo.test.dao;
 
 import com.supinfo.test.ReponseRest.CorrespondanceReponse;
+import com.supinfo.test.ReponseRest.PossibilityReponse;
 import com.supinfo.test.ReponseRest.Success;
 import com.supinfo.test.ReponseRest.VoyageReponse;
 import com.supinfo.test.entity.Gare;
 import com.supinfo.test.entity.Ligne;
 import com.supinfo.test.entity.Route;
+import com.supinfo.test.entity.Trains;
 import com.supinfo.test.utils.PersistenceManager;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +28,10 @@ public class JpaVoyages {
     public JpaVoyages() {
         entityManagerFactory = PersistenceManager.getEntityManagerFactory();
     }
-
+    /*
+     * Recupère le nombre de kilometres entre 2 gares de la ligne
+      *
+      * */
     private int getkmfor(Ligne routeList, Gare dep , Gare arriv , EntityManager entityManager){
         Query queryy=entityManager.createQuery("FROM Route rt where rt.ligne=:ligne ");
 
@@ -47,16 +53,64 @@ public class JpaVoyages {
         return temps;
 
     }
+    /*
+     * Recupère le nombre de kilometres entre le debut de la ligne et une gare de la ligne
+      *
+      * */
+    private int getkmfor(Ligne routeList,  Gare arriv , EntityManager entityManager){
+        Query queryy=entityManager.createQuery("FROM Route rt where rt.ligne=:ligne ");
+
+        queryy.setParameter("ligne",routeList);
+        int temps = 0;
+        for (Route route : (List<Route>) queryy.getResultList()) {
+            temps += route.getDistance();
+            if( route.getGare_arrivee().getNom_gare().equals(arriv.getNom_gare())){
+                break;
+            }
+        }
+        return temps;
+
+    }
+
+    private void gethorairesfromCorrespondanceReponse(ArrayList<CorrespondanceReponse> correspondanceReponses, EntityManager entityManager, Date date , Integer pos) {
+        Calendar calendar = Calendar.getInstance();
+          calendar.setTime(date);
+        boolean comp = false;
+        for (CorrespondanceReponse correspondanceReponse : correspondanceReponses) {
+
+            JpaLigne jpaLigne = new JpaLigne();
 
 
-    private ArrayList<CorrespondanceReponse> getlignesfromroute(List<Route> routeList, EntityManager entityManager) {
+            Ligne ligne = jpaLigne.get(correspondanceReponse.getLigne());
+            int cal = getkmfor(ligne, correspondanceReponse.getGareD() ,   entityManager)*33;
+            calendar.add(Calendar.SECOND, -cal);
+            Query queryy=entityManager.createQuery("FROM Trains rt where rt.ligne=:ligne and rt.Date_depart >=:dateD  ");
+            if(!comp){
+                queryy.setFirstResult(pos);
+                comp= true;
+            }
 
+            queryy.setMaxResults(1);
+            queryy.setParameter("ligne",ligne);
+            // gets a calendar using the default time zone and locale.
+            queryy.setParameter("dateD",calendar.getTime());
 
+            Trains trains = (Trains) queryy.getSingleResult();
+            correspondanceReponse.setTrain(trains);
+            calendar.setTime(trains.getDate_depart());
+            calendar.add(Calendar.SECOND, cal);
+            correspondanceReponse.setHeureD(calendar.getTime());
+            int km = getkmfor(ligne, correspondanceReponse.getGareD() ,correspondanceReponse.getGareA(),   entityManager);
+            int call= km *33;
+            calendar.add(Calendar.SECOND, call);
+            correspondanceReponse.setKm(km);
+            correspondanceReponse.setDuree(call);
+            correspondanceReponse.setHeureA(calendar.getTime());
 
+        }
+    }
 
-
-
-
+    private ArrayList<CorrespondanceReponse> getSimpleroutesfromlist(List<Route> routeList, EntityManager entityManager) {
 
         ArrayList<CorrespondanceReponse> correspondanceReponses = new ArrayList<CorrespondanceReponse>();
         String tempnimligne =routeList.get(0).getLigne().getNomLigne();
@@ -64,13 +118,16 @@ public class JpaVoyages {
         Gare dep = routeList.get(0).getGare_depart();
 
         CorrespondanceReponse correspondanceReponse = new CorrespondanceReponse();
-
+        int i = 1;
         for (Route route : routeList) {
             correspondanceReponse.setGareD(dep);
             correspondanceReponse.setLigne(tempnimligne);
-            correspondanceReponse.setGareA(route.getGare_depart());
+            if (i++ == routeList.size()) {
+                correspondanceReponse.setGareA(route.getGare_arrivee());
+            }else {
+                correspondanceReponse.setGareA(route.getGare_depart());
+            }
             if(!route.getLigne().getNomLigne().equals(tempnimligne)){
-
                 correspondanceReponses.add(correspondanceReponse);
                 correspondanceReponse = new CorrespondanceReponse();
                 dep=  route.getGare_depart();
@@ -97,7 +154,12 @@ public class JpaVoyages {
         return correspondanceReponses;
     }
 
-
+    /*
+    *
+    *
+    * Creer un chemin par arbre pour la ligne
+    *
+    * */
     public Boolean find = false;
     public List<Route> getroutesfromgare(Gare dep,List<Route> routeList , EntityManager entityManager ,String Destiantion){
         Query queryy=entityManager.createQuery("  FROM Route rt where rt.Gare_depart=:Gare_depart ");
@@ -131,7 +193,7 @@ public class JpaVoyages {
     }
 
 
-    public VoyageReponse search(Integer gareD, Integer gareA, Integer heureD, Integer heureR, Integer dateD, Integer dateR) {
+    public VoyageReponse search(Integer gareD, Integer gareA, Date dateD , Date dateR) {
         VoyageReponse voyageReponse = new VoyageReponse();
         Success succ = new Success(true, "");
         EntityManager entityManager=entityManagerFactory.createEntityManager();
@@ -169,7 +231,31 @@ public class JpaVoyages {
                 voyageReponse.setRouteList(routeList);
                 voyageReponse.setSuccess(succ);
 
-         voyageReponse.setCorrespondanceReponses( getlignesfromroute(routeList, entityManager));
+        ArrayList<PossibilityReponse> possibilityReponsesarr = new ArrayList<PossibilityReponse>();
+
+        for (int i = 0; i < 5; i++) {
+            PossibilityReponse possibilityReponses = new  PossibilityReponse();
+
+            ArrayList<CorrespondanceReponse> correspondanceReponses = new ArrayList<CorrespondanceReponse>();
+            correspondanceReponses = getSimpleroutesfromlist(routeList, entityManager);
+            gethorairesfromCorrespondanceReponse(correspondanceReponses, entityManager, dateD ,i);
+            Integer km = 0 ;
+            for (CorrespondanceReponse correspondanceReponse : correspondanceReponses) {
+                km+=correspondanceReponse.getKm();
+            }
+            possibilityReponses.setDepart(correspondanceReponses.get(0).getHeureD());
+            possibilityReponses.setArrDate(correspondanceReponses.get(correspondanceReponses.size()-1).getHeureA());
+
+            possibilityReponses.setCorrespondanceReponses(correspondanceReponses);
+            possibilityReponses.setDistancetotale(km);
+
+            possibilityReponses.setPos(i);
+            possibilityReponsesarr. add(possibilityReponses);
+        }
+
+
+
+        voyageReponse.setPossibilityReponses(possibilityReponsesarr );
 
 
 
@@ -178,6 +264,8 @@ public class JpaVoyages {
 
         return voyageReponse;
     }
+
+
 
 
 }

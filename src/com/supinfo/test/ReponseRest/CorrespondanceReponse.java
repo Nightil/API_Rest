@@ -2,6 +2,7 @@ package com.supinfo.test.ReponseRest;
 
 import com.supinfo.test.entity.Gare;
 import com.supinfo.test.entity.Ligne;
+import com.supinfo.test.entity.Trains;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -16,7 +17,16 @@ public class CorrespondanceReponse implements Serializable{
     Gare gareD = null;
     Gare gareA = null;
     Integer duree = 0;
+    Integer km = 0;
     String ligne = null;
+    Trains train = null;
+    public Integer getKm() {
+        return km;
+    }
+
+    public void setKm(Integer km) {
+        this.km = km;
+    }
 
     public Gare getGareD() {
         return gareD;
@@ -28,6 +38,14 @@ public class CorrespondanceReponse implements Serializable{
 
     public Gare getGareA() {
         return gareA;
+    }
+
+    public Trains getTrain() {
+        return train;
+    }
+
+    public void setTrain(Trains train) {
+        this.train = train;
     }
 
     public void setGareA(Gare gareA) {
