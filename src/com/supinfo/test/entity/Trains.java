@@ -1,6 +1,7 @@
 package com.supinfo.test.entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -18,14 +19,16 @@ public class Trains {
     @Column(name = "surplus")
     private double surplus;
 
-    @Column(name = "heure_depart")
-    private Date heure_depart;
+    @Column(name = "Date_depart", columnDefinition="DATETIME")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date Date_depart;
 
     @Column(name = "nbr_place")
     private int nbr_place;
 
-    @OneToMany(mappedBy = "train")
-    private List<Trains> train;
+    @ManyToOne
+    private Ligne ligne;
+
 
     public int getId() {
         return id;
@@ -43,12 +46,12 @@ public class Trains {
         this.surplus = surplus;
     }
 
-    public Date getHeure_depart() {
-        return heure_depart;
+    public Date getDate_depart() {
+        return Date_depart;
     }
 
-    public void setHeure_depart(Date heure_depart) {
-        this.heure_depart = heure_depart;
+    public void setDate_depart(Date date_depart) {
+        Date_depart = date_depart;
     }
 
     public int getNbr_place() {
@@ -59,11 +62,11 @@ public class Trains {
         this.nbr_place = nbr_place;
     }
 
-    public List<Trains> getTrain() {
-        return train;
+    public Ligne getLigne() {
+        return ligne;
     }
 
-    public void setTrain(List<Trains> train) {
-        this.train = train;
+    public void setLigne(Ligne ligne) {
+        this.ligne = ligne;
     }
 }
