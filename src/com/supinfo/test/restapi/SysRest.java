@@ -115,7 +115,6 @@ public class SysRest extends HttpServlet{
         //Nom gare : Nom ville : CP : GPS
 
         testt.addGare( "Gare d'Orléans" ,"Orléans" , 45000,new Point(48,2));
-        testt.addGare( "Gare des Aubrais-Orléans" ,"Orléans" , 45000,new Point(48,2));
 
         testt.addGare( "Gare de Lyon" ,"Paris" , 75000,new Point(48,2));
 

@@ -100,6 +100,8 @@ public class JpaVoyages {
             int km = getkmfor(ligne, correspondanceReponse.getGareD() ,correspondanceReponse.getGareA(),   entityManager);
             int call= km *33;
             calendar.add(Calendar.SECOND, call);
+
+
             correspondanceReponse.setKm(km);
             correspondanceReponse.setDuree(call);
             correspondanceReponse.setHeureA(calendar.getTime());
@@ -245,7 +247,11 @@ public class JpaVoyages {
 
             possibilityReponses.setCorrespondanceReponses(correspondanceReponses);
             possibilityReponses.setDistancetotale(km);
-
+            double surplus = 0.0;
+            for (CorrespondanceReponse correspondanceReponse : correspondanceReponses) {
+                surplus+=correspondanceReponse.getTrain().getSurplus();
+            }
+            possibilityReponses.setPrix( (possibilityReponses.getDistancetotale()*0.2) +surplus);
             possibilityReponses.setPos(i);
             possibilityReponsesarr. add(possibilityReponses);
         }

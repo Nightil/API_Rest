@@ -12,6 +12,8 @@ import javax.persistence.criteria.CriteriaDelete;
 import javax.servlet.http.HttpServlet;
 import javax.ws.rs.*;
 import java.awt.*;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Random;
 
 /**
@@ -25,6 +27,11 @@ public class GareRest extends HttpServlet{
     @POST
     public String searchGare(@HeaderParam("search") String search  )
     {
+        try {
+            search = URLDecoder.decode(search, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+           // e.printStackTrace();
+        }
         JpaGares test = new JpaGares();
        /* test.addGare( new Random().toString());
         test.addGare( new Random().toString());

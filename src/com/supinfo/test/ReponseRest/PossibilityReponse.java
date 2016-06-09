@@ -15,6 +15,7 @@ public class PossibilityReponse implements Serializable {
     Integer distancetotale = null;
     Date Depart = null;
     Date ArrDate = null;
+    double prix;
 
     public Integer getDistancetotale() {
         return distancetotale;
@@ -54,5 +55,13 @@ public class PossibilityReponse implements Serializable {
 
     public void setPos(Integer pos) {
         this.pos = pos;
+    }
+
+    public double getPrix() {
+        return prix;
+    }
+
+    public void setPrix(double prix) {
+        this.prix = prix;
     }
 }

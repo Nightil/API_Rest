@@ -1,5 +1,11 @@
 package com.supinfo.test.dao;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.supinfo.test.ReponseRest.ReservationReponse;
 import com.supinfo.test.ReponseRest.Success;
 import com.supinfo.test.entity.Gare;
@@ -11,6 +17,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import java.io.FileOutputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -37,6 +44,32 @@ public class JpaReservations {
                 JpaUtilisateurs jpaUtilisateurs = new JpaUtilisateurs();
                 toAdd.setReservationsuser(jpaUtilisateurs.getid(Long.valueOf(id_utilisateur)));
             }
+           /* Document document = new Document();
+
+            PdfPTable table = new PdfPTable(3);
+
+            //On créer l'objet cellule.
+            PdfPCell cell;
+
+            cell = new PdfPCell(new Phrase("Fusion de chaque première cellule de chaque colonne");
+                    cell.setColspan(3);
+            table.addCell(cell);
+
+            cell = new PdfPCell(new Phrase("Fusion de 2 cellules de la première colonne")
+                    cell.setRowspan(2);
+            table.addCell(cell);
+
+            //contenu du tableau.
+            table.addCell("Colonne 1; Cellule 1");
+            table.addCell("Colonne 1; Cellule 2");
+            table.addCell("Colonne 2; Cellule 1");
+            table.addCell("Colonne 2; Cellule 2");
+            PdfWriter.getInstance(document, new FileOutputStream(chemin));
+            document.open();
+            document.add(new Paragraph("Reservation"));
+            document.add(table);
+            document.close();*/
+
             toAdd.setCivilite(civilite);
             toAdd.setNom(nom);
             toAdd.setEmail(mail);

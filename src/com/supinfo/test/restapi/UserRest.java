@@ -22,6 +22,7 @@ public class UserRest extends HttpServlet{
         jpaUsers.addUser("test@test.com","test","non","test");*/
 
         JpaUtilisateurs test = new JpaUtilisateurs();
+
         UserReponse userReponse = test.addUser(nom, prenom, email, mdp, civilite, adresse);
 
 
