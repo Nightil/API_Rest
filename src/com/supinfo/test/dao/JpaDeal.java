@@ -1,18 +1,14 @@
 package com.supinfo.test.dao;
 
 import com.supinfo.test.ReponseRest.DealReponse;
-import com.supinfo.test.ReponseRest.GaresReponse;
 import com.supinfo.test.ReponseRest.Success;
 import com.supinfo.test.entity.Deal;
-import com.supinfo.test.entity.Gare;
-import com.supinfo.test.entity.User;
 import com.supinfo.test.utils.PersistenceManager;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
-import java.awt.*;
 import java.util.List;
 
 /**

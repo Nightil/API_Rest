@@ -1,16 +1,9 @@
 package com.supinfo.test.restapi;
 
-import com.sun.research.ws.wadl.Response;
 import com.supinfo.test.ReponseRest.UserReponse;
-import com.supinfo.test.dao.JpaUsers;
 import com.supinfo.test.dao.JpaUtilisateurs;
-import com.supinfo.test.utils.PersistenceManager;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
 
 /**

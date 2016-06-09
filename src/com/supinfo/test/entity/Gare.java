@@ -33,14 +33,7 @@ public class Gare {
     @Column(name = "ville")
     public String ville;
 
-    @OneToMany(mappedBy = "Gare_depart")
-    private transient  java.util.List<Voyages> Voyage_Depart;
 
-    @OneToMany(mappedBy = "Gare_arrivee")
-    private transient  java.util.List<Voyages> Voyage_arrivee;
-
-    @ManyToOne
-    private Escale Escale_gare;
 
     public long getId() {
         return id;
@@ -66,14 +59,6 @@ public class Gare {
         this.gps = gps;
     }
 
-    public java.util.List<Voyages> getVoyage_Depart() {
-        return Voyage_Depart;
-    }
-
-    public void setVoyage_Depart(List<Voyages> voyage_Depart) {
-        Voyage_Depart = voyage_Depart;
-    }
-
     public String getVille() {
         return ville;
     }
@@ -90,12 +75,5 @@ public class Gare {
         this.code_postal = code_postal;
     }
 
-    public List<Voyages> getVoyage_arrivee() {
-        return Voyage_arrivee;
-    }
-
-    public void setVoyage_arrivee(List<Voyages> voyage_arrivee) {
-        Voyage_arrivee = voyage_arrivee;
-    }
 }
 

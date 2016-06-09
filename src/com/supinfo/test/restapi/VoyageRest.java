@@ -38,11 +38,11 @@ public class VoyageRest extends HttpServlet{
             calendar.set(Integer.valueOf(parts[0]),Integer.valueOf(parts[1]),Integer.valueOf(parts[2]),heureD,0);
 
         }catch (Exception e){
-            return new VoyageReponse(null, new Success(false,"Erreur du formatage de la date")).toJson();
+            return new VoyageReponse( new Success(false,"Erreur du formatage de la date")).toJson();
         }
 
         if(heureD >= 24 || heureD < 0 ){
-            return new VoyageReponse(null, new Success(false,"Erreur dans l'heure de depart")).toJson();
+            return new VoyageReponse( new Success(false,"Erreur dans l'heure de depart")).toJson();
         }
         VoyageReponse voyageReponse = test.search(gareD, gareA,calendar.getTime(),null);
         searchResponse.setAllee(voyageReponse);
@@ -53,11 +53,11 @@ public class VoyageRest extends HttpServlet{
                 calendarr.set(Integer.valueOf(parts[0]),Integer.valueOf(parts[1]),Integer.valueOf(parts[2]),heureR,0);
 
             }catch (Exception e){
-                return new VoyageReponse(null, new Success(false,"Erreur du formatage de la date")).toJson();
+                return new VoyageReponse( new Success(false,"Erreur du formatage de la date")).toJson();
             }
 
             if(heureR >= 24 || heureR < 0 ){
-                return new VoyageReponse(null, new Success(false,"Erreur dans l'heure de depart")).toJson();
+                return new VoyageReponse( new Success(false,"Erreur dans l'heure de depart")).toJson();
             }
             VoyageReponse voyageReponse2 = test.search(gareA,gareD ,calendarr.getTime(),null);
             searchResponse.setRetour(voyageReponse2);

@@ -1,7 +1,6 @@
 package com.supinfo.test.ReponseRest;
 
 import com.google.gson.Gson;
-import com.supinfo.test.entity.User;
 import com.supinfo.test.entity.Utilisateurs;
 
 import java.io.Serializable;

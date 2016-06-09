@@ -26,6 +26,7 @@ public class SearchResponse implements Serializable {
     public void setRetour(VoyageReponse retour) {
         this.retour = retour;
     }
+
     public String toJson(){
         Gson gson = new Gson();
         return  gson.toJson(this);
