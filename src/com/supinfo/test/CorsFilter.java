@@ -38,7 +38,7 @@ public class CorsFilter implements  Filter {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, HEAD, OPTIONS");
-        response.setHeader("Access-Control-Allow-Headers","gareD,gareA,heureD,heureR,dateD,dateR,Access-Control-Allow-Headers,cache-control,postman-token, search, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+        response.setHeader("Access-Control-Allow-Headers","gareD,gareA,id_utilisateur,id_reservation,heureD,heureR,dateD,dateR,Access-Control-Allow-Headers,cache-control,postman-token, search, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

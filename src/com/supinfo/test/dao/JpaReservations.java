@@ -68,6 +68,7 @@ public class JpaReservations {
             toAdd.setNom(nom);
             toAdd.setEmail(mail);
             toAdd.setPrenom(prenom);
+            System.out.println(PossibilityReponse);
             toAdd.setPossibilityReponse(PossibilityReponse);
             EntityTransaction t = em.getTransaction();
             try {
@@ -81,7 +82,7 @@ public class JpaReservations {
                 em.close();
             }
         }catch (Exception e){
-            reservationReponse.setSuccess(new Success(false,"Une erreur est survenue lors de la reservation"));
+            reservationReponse.setSuccess(new Success(false,"Une erreur est survenue lors de la reservation "+e));
         }
 
         return reservationReponse;
