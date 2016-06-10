@@ -1,20 +1,14 @@
 package com.supinfo.test.restapi;
 
 import com.supinfo.test.ReponseRest.GaresReponse;
-import com.supinfo.test.ReponseRest.UserReponse;
-import com.supinfo.test.dao.JpaDeal;
 import com.supinfo.test.dao.JpaGares;
-import com.supinfo.test.dao.JpaRoute;
-import com.supinfo.test.dao.JpaUtilisateurs;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaDelete;
 import javax.servlet.http.HttpServlet;
 import javax.ws.rs.*;
-import java.awt.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.Random;
 
 /**
  * Created by Alexa on 04/06/2015.
@@ -23,14 +17,15 @@ import java.util.Random;
 @Path("/garerest")
 public class GareRest extends HttpServlet{
 
-    @Path("/searchGare")
+    @Path("/searchGare"  )
     @POST
-    public String searchGare(@HeaderParam("search") String search  )
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response searchGare(@HeaderParam("search") String search  )
     {
         try {
             search = URLDecoder.decode(search, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-           // e.printStackTrace();
+            // e.printStackTrace();
         }
         JpaGares test = new JpaGares();
        /* test.addGare( new Random().toString());
@@ -39,9 +34,13 @@ public class GareRest extends HttpServlet{
         test.addGare( new Random().toString());*/
         GaresReponse userReponse = test.search(search);
 
-        return userReponse.toJson(); //TODO replace this stub to something useful
-    }
+        return Response.ok(userReponse.toJson()).status(200) .header("Access-Control-Allow-Origin","*")
+                .header("Access-Control-Max-Age","1728000")          .header("Content-Type","application/json")
 
+        .header("Access-Control-Allow-Methods","POST, GET, OPTIONS, PUT, DELETE, HEAD")
+                .header("Access-Control-Allow-Headers","X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept")
+                .build();
+    }
 
 
 
