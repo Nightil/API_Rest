@@ -13,6 +13,9 @@ import com.supinfo.test.utils.PersistenceManager;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -121,7 +124,7 @@ public class JpaVoyages {
         for (Route route : routeList) {
             correspondanceReponse.setGareD(dep);
             correspondanceReponse.setLigne(tempnimligne);
-            if (i++ == routeList.size()) {
+            if (i++ == routeList.size() && route.getLigne().getNomLigne().equals(tempnimligne)) {
                 correspondanceReponse.setGareA(route.getGare_arrivee());
             }else {
                 correspondanceReponse.setGareA(route.getGare_depart());
@@ -136,6 +139,7 @@ public class JpaVoyages {
                 correspondanceReponse.setLigne(tempnimligne);
                 correspondanceReponse.setGareA(route.getGare_arrivee());
             }
+
 
 
             /*
@@ -251,7 +255,14 @@ public class JpaVoyages {
             for (CorrespondanceReponse correspondanceReponse : correspondanceReponses) {
                 surplus+=correspondanceReponse.getTrain().getSurplus();
             }
-            possibilityReponses.setPrix( (possibilityReponses.getDistancetotale()*0.2) +surplus);
+            try {
+                Double d = round((possibilityReponses.getDistancetotale()*0.2) +surplus,2);
+
+                possibilityReponses.setPrix(d);
+            }catch (Exception e){
+                System.out.println(e);
+            }
+
             possibilityReponses.setPos(i);
             possibilityReponsesarr. add(possibilityReponses);
         }
@@ -267,7 +278,11 @@ public class JpaVoyages {
 
         return voyageReponse;
     }
-
+    public static double round(double d, int decimalPlace) {
+        BigDecimal bd = new BigDecimal(d);
+        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+        return bd.doubleValue();
+    }
 
 
 

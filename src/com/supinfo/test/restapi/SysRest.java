@@ -52,6 +52,7 @@ public class SysRest extends HttpServlet{
         Random r = new Random();
         int Low = 0;
         int High = 60;
+        int High1 = 10;
         DateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );
 
         for (int m = 1; m <= 12; m++) {
@@ -61,7 +62,8 @@ public class SysRest extends HttpServlet{
                     try {
                         int u = (r.nextInt(High-Low) + Low);
                         Date Ddate = dateFormat.parse( "2016-"+m+"-"+d+" "+i+":"+u+":00" );
-                        jpaTrain.addTrain(Ddate, jpaLigne.get("A"), 100, 0);
+                        int g = (r.nextInt(High1-Low) + Low);
+                        jpaTrain.addTrain(Ddate, jpaLigne.get("A"), 100, g);
 
                     } catch (ParseException e) {
 
@@ -69,7 +71,8 @@ public class SysRest extends HttpServlet{
                     try {
                         int u = (r.nextInt(High-Low) + Low);
                         Date Ddate = dateFormat.parse( "2016-"+m+"-"+d+" "+i+":"+u+":00" );
-                        jpaTrain.addTrain(Ddate, jpaLigne.get("B"), 100, 0);
+                        int g = (r.nextInt(High1-Low) + Low);
+                        jpaTrain.addTrain(Ddate, jpaLigne.get("B"), 100, g);
 
                     } catch (ParseException e) {
 
@@ -77,7 +80,9 @@ public class SysRest extends HttpServlet{
                     try {
                         int u = (r.nextInt(High-Low) + Low);
                         Date Ddate = dateFormat.parse( "2016-"+m+"-"+d+" "+i+":"+u+":00" );
-                        jpaTrain.addTrain(Ddate, jpaLigne.get("C"), 100, 0);
+                        int g = (r.nextInt(High1-Low) + Low);
+
+                        jpaTrain.addTrain(Ddate, jpaLigne.get("C"), 100, g);
 
                     } catch (ParseException e) {
 
@@ -85,7 +90,9 @@ public class SysRest extends HttpServlet{
                     try {
                         int u = (r.nextInt(High-Low) + Low);
                         Date Ddate = dateFormat.parse( "2016-"+m+"-"+d+" "+i+":"+u+":00" );
-                        jpaTrain.addTrain(Ddate, jpaLigne.get("D"), 100, 0);
+                        int g = (r.nextInt(High1-Low) + Low);
+
+                        jpaTrain.addTrain(Ddate, jpaLigne.get("D"), 100, g);
 
                     } catch (ParseException e) {
 
@@ -93,7 +100,9 @@ public class SysRest extends HttpServlet{
                     try {
                         int u = (r.nextInt(High-Low) + Low);
                         Date Ddate = dateFormat.parse( "2016-"+m+"-"+d+" "+i+":"+u+":00" );
-                        jpaTrain.addTrain(Ddate, jpaLigne.get("E"), 100, 0);
+                        int g = (r.nextInt(High1-Low) + Low);
+
+                        jpaTrain.addTrain(Ddate, jpaLigne.get("E"), 100, g);
 
                     } catch (ParseException e) {
 
@@ -101,7 +110,9 @@ public class SysRest extends HttpServlet{
                     try {
                         int u = (r.nextInt(High-Low) + Low);
                         Date Ddate = dateFormat.parse( "2016-"+m+"-"+d+" "+i+":"+u+":00" );
-                        jpaTrain.addTrain(Ddate, jpaLigne.get("F"), 100, 0);
+                        int g = (r.nextInt(High1-Low) + Low);
+
+                        jpaTrain.addTrain(Ddate, jpaLigne.get("F"), 100, g);
 
                     } catch (ParseException e) {
 
